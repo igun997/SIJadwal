@@ -54,6 +54,33 @@ public class CRUD {
         }
         return null;
     }
+    public ResultSet getListMateri(String sesi){
+        try {
+            ResultSet rs = dbconnection.query_get("SELECT * FROM materi JOIN matkul ON matkul.id_matkul = materi.matkul_id WHERE matkul.users_id = '"+sesi+"' ORDER BY materi.id_materi DESC");
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    public ResultSet getListMateriByID(String sesi){
+        try {
+            ResultSet rs = dbconnection.query_get("SELECT * FROM materi JOIN matkul ON matkul.id_matkul = materi.matkul_id WHERE materi.id_materi = '"+sesi+"' ORDER BY materi.id_materi DESC");
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    public ResultSet getListMatkul(String id){
+        try {
+            ResultSet rs = dbconnection.query_get("SELECT * FROM matkul WHERE users_id = '"+id+"' ORDER BY id_matkul DESC");
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     public ResultSet getListKelas(String id){
         try {
             ResultSet rs = dbconnection.query_get("SELECT * FROM kelas WHERE users_id = '"+id+"' ORDER BY id_kelas ASC");
@@ -77,6 +104,20 @@ public class CRUD {
     public int insKelas(Kelas o){
         String[] data = {o.getNama_kelas(),o.getUsers_id()};
         int rs = dbconnection.query_update("INSERT INTO kelas(nama_kelas,users_id) VALUES(?,?)", data);
+        return rs;
+    }
+    public int insMateri(String[] data){
+        int rs = dbconnection.query_update("INSERT INTO materi(judul_materi,isi_materi,users_id,matkul_id) VALUES(?,?,?,?)", data);
+        return rs;
+    }
+    public int upMateri(String[] data){
+        String sql = "UPDATE `materi` SET `judul_materi`= ?,`isi_materi`= ?,`matkul_id`= ? WHERE `id_materi`= ?";
+        int rs = dbconnection.query_update(sql, data);
+        return rs;
+    }
+    public int delMateri(String o){
+        String[] data = {o};
+        int rs = dbconnection.query_update("DELETE FROM materi WHERE id_materi = ?", data);
         return rs;
     }
     public int delJadwal(Matkul o){

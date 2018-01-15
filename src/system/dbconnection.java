@@ -30,7 +30,7 @@ public class dbconnection {
     {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/sijadwal","root","");
+            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/sijadwal?zeroDateTimeBehavior=convertToNull","root","");
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Database Tidak Terkoneksi");

@@ -5,19 +5,57 @@
  */
 package penjadwalanpribadi.view.pages;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import penjadwalanpribadi.entity.Kelas;
+import penjadwalanpribadi.entity.Matkul;
+import penjadwalanpribadi.temp.writeText;
+
 /**
  *
  * @author Sys5
  */
 public class materi extends javax.swing.JFrame {
-
+    DefaultTableModel tabModel;
+    String sess;
     /**
      * Creates new form materi
      */
     public materi() {
         initComponents();
+        setJTable();
     }
-
+    private void getData(){
+        writeText session = new writeText();
+        String sesi = session.getsession();
+        Matkul data = new Matkul();
+        sess = sesi;
+        ResultSet rs = data.getListMateri(sesi);
+        try {
+            while(rs.next()){
+                Object Apa[]={rs.getString("id_materi"),rs.getString("judul_materi"),rs.getString("nama_matkul"),rs.getString("tgl_input")};
+                tabModel.addRow(Apa);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(jadwal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void setJTable(){
+        String [] JudulKolom={"ID","Judul Materi","Mata Kuliah","Tanggal Buat"};
+        tabModel = new DefaultTableModel(null, JudulKolom){
+                      boolean[] canEdit = new boolean [] { false, false,false, false};
+                      @Override
+                      public boolean isCellEditable(int rowIndex, int columnIndex) {
+                       return canEdit [columnIndex];
+                      }
+                  };
+        tabelMateri.setModel(tabModel);
+        getData();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,22 +65,158 @@ public class materi extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelMateri = new javax.swing.JTable();
+        btnTambah = new javax.swing.JButton();
+        btnBatal = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
+        btnUbah = new javax.swing.JButton();
+        cari = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Materi");
+
+        tabelMateri.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tabelMateri);
+
+        btnTambah.setText("Tambah");
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahActionPerformed(evt);
+            }
+        });
+
+        btnBatal.setText("Batal");
+        btnBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBatalActionPerformed(evt);
+            }
+        });
+
+        btnHapus.setText("Hapus");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
+
+        btnUbah.setText("Ubah");
+        btnUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUbahActionPerformed(evt);
+            }
+        });
+
+        cari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cariActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Cari");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnTambah)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnUbah)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnHapus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBatal)
+                        .addGap(154, 154, 154))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(cari, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTambah)
+                    .addComponent(btnBatal)
+                    .addComponent(btnHapus)
+                    .addComponent(btnUbah))
+                .addGap(23, 23, 23))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
+        dispose();
+        materi_tambah ob = new materi_tambah();
+        ob.setVisible(true);
+
+    }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
+       dispose();
+    }//GEN-LAST:event_btnBatalActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+       if(tabelMateri.getRowCount() > 0){
+           String selectedRow = tabelMateri.getValueAt(tabelMateri.getSelectedRow(), 0).toString();
+           Kelas ob = new Kelas();
+           int t = JOptionPane.showConfirmDialog(null, "Anda Akan Menghapus Materi");
+           if(t == 0){
+                int s = ob.delMateri(selectedRow);
+                if(s == 1){
+                 JOptionPane.showMessageDialog(null, "Data Berhasil Di Hapus");
+                }else{
+                 JOptionPane.showMessageDialog(null, "Data Gagal Di Hapus");
+                }   
+           }
+       }else{
+           JOptionPane.showMessageDialog(null, "Tidak Ditemukan");
+       }
+       setJTable();
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
+        dispose();
+        if(tabelMateri.getRowCount() > 0){
+           String selectedRow = tabelMateri.getValueAt(tabelMateri.getSelectedRow(), 0).toString();
+           materi_ubah.curId = selectedRow;
+           materi_ubah ob = new materi_ubah();
+           ob.setVisible(true);
+        }else{
+           JOptionPane.showMessageDialog(null, "Tidak Ditemukan");
+       }
+    }//GEN-LAST:event_btnUbahActionPerformed
+
+    private void cariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cariActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cariActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,5 +254,13 @@ public class materi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBatal;
+    private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btnUbah;
+    private javax.swing.JTextField cari;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tabelMateri;
     // End of variables declaration//GEN-END:variables
 }
