@@ -82,7 +82,7 @@ public class Utama extends javax.swing.JFrame {
             }
         });
 
-        pengaturanPage.setText("Pengaturan");
+        pengaturanPage.setText("FRS KIT");
         pengaturanPage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pengaturanPageActionPerformed(evt);
@@ -113,7 +113,7 @@ public class Utama extends javax.swing.JFrame {
                 .addComponent(pengaturanPage)
                 .addGap(18, 18, 18)
                 .addComponent(logoutPage)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,8 +192,8 @@ public class Utama extends javax.swing.JFrame {
     }//GEN-LAST:event_kelasPageActionPerformed
 
     private void pengaturanPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pengaturanPageActionPerformed
-        pengaturan p = new pengaturan();
-        p.setTitle("Halaman Pengaturan");
+        frskit p = new frskit();
+        p.setTitle("FRS UNIKOM KIT");
         p.setAlwaysOnTop(true);
         p.setVisible(true);
     }//GEN-LAST:event_pengaturanPageActionPerformed

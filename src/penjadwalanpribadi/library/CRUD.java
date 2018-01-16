@@ -144,8 +144,8 @@ public class CRUD {
         return null;
     }
     public int register(Users o){
-        String[] data = {o.getNama(),o.getUsername(),o.getPassword(),o.getSekolah()};
-        int ts = dbconnection.query_update("INSERT INTO users (nama,username,password,sekolah) VALUES (?,?,MD5(?),?)", data);
+        String[] data = {o.getNim(),o.getNama(),o.getUsername(),o.getPassword(),o.getSekolah()};
+        int ts = dbconnection.query_update("INSERT INTO users (id_users,nama_users,username,password,sekolah) VALUES (?,?,?,MD5(?),?)", data);
         return ts;       
     }
 }

@@ -17,12 +17,21 @@ public class Users extends CRUD{
     private String username;
     private String password;
     private String sekolah;
+    private String nim;
     private String log_masuk;
 
     public int getId_users() {
         return id_users;
     }
 
+    public String getNim() {
+        return nim;
+    }
+
+    public void setNim(String nim) {
+        this.nim = nim;
+    }
+          
     public void setId_users(int id_users) {
         this.id_users = id_users;
     }
